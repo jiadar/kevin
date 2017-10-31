@@ -1,4 +1,6 @@
+// maybe want to just import arraylist
 import java.util.*;
+import java.util.Collections;
 
 public class Polynomial implements PolynomialADTList {
 	private ArrayList<term> termList = new ArrayList<term>();
@@ -24,8 +26,9 @@ public class Polynomial implements PolynomialADTList {
 
 	// get coefficient of the power the user entered
 	@Override
-	public int getCoefficient(int power) {
+	public int getCoefficient(int power) throws InvalidPowerException {
 		int desiredCoefficient = 0;
+      // add try / catch here and string with error
 		for (int i = 0; i < termList.size(); i++) {
 			if (power == termList.get(i).getDegree()) {
 				desiredCoefficient = termList.get(i).getCoefficient();
@@ -38,7 +41,9 @@ public class Polynomial implements PolynomialADTList {
 
 	// change the coefficient of power that user entered
 	@Override
-	public void changeCoefficient(int newCoefficient, int power) {
+	public void changeCoefficient(int newCoefficient, int power)
+   throws InvalidPowerException {
+      // add try / catch here and string with error
 		for (int i = 0; i < termList.size(); i++) {
 			if (power == termList.get(i).getDegree()) {
 				termList.get(i).changeCoefficient(newCoefficient);
@@ -49,32 +54,33 @@ public class Polynomial implements PolynomialADTList {
 	@Override
 	public String toString() {
 		// reorganizing the array (doesn't work)
-		ArrayList<term> newTermList = new ArrayList<term>();
+      Collections.sort(termList);
+      String s = "";
 		for (int i = 0; i < termList.size(); i++) {
-				if (termList.get(i).getDegree() == getDegreeOfPolynomial()) {
-					newTermList.add(termList.get(i));
-				} else if (termList.get(i).getDegree() < getDegreeOfPolynomial()) {
-					newTermList.add(termList.get(i));
-				} else {
-					term zero = new term(0,i);
-					newTermList.add(zero);
-				}
-		}
-		String s = "";
-		for (int i = 0; i < newTermList.size(); i++) {
-			if (i == (newTermList.size() - 1)) {
-				s = s + newTermList.get(i).toString();
+			if (i == (termList.size() - 1)) {
+				s = s + termList.get(i).toString();
 			} else {
-				s = s + newTermList.get(i).toString() + " + ";
+				s = s + termList.get(i).toString() + " + ";
 			}
 		}
 		return s;
 	}
 
 	@Override
-	public void addPolynomials(Polynomial p2) {
-		// make an array list of the new polynomial
+	public Polynomial addPolynomials(Polynomial p2) {
 
+      // update interface to include method/return type
+      // make new polynominal for return value (rval)
+      // sort this (Collections.sort(termList)) (p1)
+      // sort p2
+      // find the highest exponent of p1 & p2 (max)
+      // loop: i [1-max]
+      // .. if p1 exponent i == p2 exponent i, add p1 & p2 coeff
+      // .... add to rval
+      // .. else if p1 exponent i exists OR p2 exponent i exists
+      // .... add the one that exists to the rval
+      // return rval
+      
 	}
 
 }
