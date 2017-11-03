@@ -114,29 +114,6 @@ public class Polynomial implements PolynomialADTList {
 
 	@Override
 	public Polynomial addPolynomials(Polynomial p2) {
-
-		// update interface to include method/return type
-		// make new polynominal for return value (rval)
-		// sort this (Collections.sort(termList)) (p1)
-		// sort p2
-		// find the highest exponent of p1 & p2 (max)
-		// loop: i [1-max]
-		// .. if p1 exponent i == p2 exponent i, add p1 & p2 coeff
-		// .... add to rval
-		// .. else if p1 exponent i exists OR p2 exponent i exists
-		// .... add the one that exists to the rval
-		// return rval
-		/**
-		 * for (int i = 0; i < highestDegree; i++) { if (termList.get(i).getDegree() ==
-		 * p2.termList.get(i).getDegree()) { term t = new
-		 * term((termList.get(i).getCoefficient() +
-		 * p2.termList.get(i).getCoefficient()), i); sumPTermList.add(t); } else if
-		 * (termList.contains(termList.get(i))) { sumPTermList.add(termList.get(i)); }
-		 * else if (p2.termList.contains(termList.get(i))) {
-		 * sumPTermList.add(p2.termList.get(i)); } }
-		 */
-
-
       // create an arraylist to hold the result set
 		ArrayList<term> s = new ArrayList<term>();
 
