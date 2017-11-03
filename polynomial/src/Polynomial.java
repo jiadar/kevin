@@ -6,11 +6,12 @@
 
 import java.util.*;
 import java.util.Collections;
+import java.util.Optional;
 
-public class polynomial implements polynomialADTList {
+public class Polynomial implements PolynomialADTList {
 	private ArrayList<term> termList = new ArrayList<term>();
 
-	public polynomial(ArrayList<term> list) {
+	public Polynomial(ArrayList<term> list) {
 		this.termList = list;
 	}
 
@@ -89,21 +90,30 @@ public class polynomial implements polynomialADTList {
 		return s;
 	}
 
-	private term getTermForExponent(ArrayList<term> t) {
+	private Optional<term> getTermForExponent(ArrayList<term> t) {
 		// search for term with the exponent wanted by loopin throug array list
 		// return that term
 		for (int i = 0; i < t.size(); i++) {
 			if (t.get(i).getDegree() == i) {
-				return t.get(i);
+				return Optional.of(t.get(i));
 			}
 		}
-		term noTerm = new term(0, 0);
-		return noTerm;
+		return Optional.empty();
 
 	}
 
+   // Get the coefficient by expoent 
+   private Optional<Integer> gcbe(int x) {
+		for (int i = 0; i < termList.size(); i++) {
+			if (termList.get(i).getDegree() == x) {
+				return Optional.of(termList.get(i).getCoefficient());
+			}
+		}
+		return Optional.empty();
+	}
+
 	@Override
-	public polynomial addPolynomials(polynomial p2) {
+	public Polynomial addPolynomials(Polynomial p2) {
 
 		// update interface to include method/return type
 		// make new polynominal for return value (rval)
@@ -126,41 +136,33 @@ public class polynomial implements polynomialADTList {
 		 * sumPTermList.add(p2.termList.get(i)); } }
 		 */
 
-		polynomial sumPolynomial;
-		ArrayList<term> sumPTermList = new ArrayList<term>();
-		Collections.sort(termList);
-		Collections.sort(p2.termList);
-		int highestDegree;
-		if (this.getDegreeOfPolynomial() > p2.getDegreeOfPolynomial()) {
-			highestDegree = termList.get(0).getDegree();
-		} else
-			highestDegree = p2.getDegreeOfPolynomial();
-		for (int i = termList.size(); i > 0; i--) {
-			if (this.getCoefficient(i) == 0) {
-				term t = new term(0, (-i + termList.get(i).getDegree()));
-				termList.add(i, t);
-			}
-			
-		}
-		for (int i = p2.termList.size(); i>0; i--) {
-			if (p2.getCoefficient(i) == 0) {
-				term t = new term(0, (-i + p2.termList.get(i).getDegree()));
-				termList.add(i, t);
-			}
-		}
-		System.out.println("P1: " + termList.toString() + "\nP2: " + p2.termList.toString());
-		for (int i = 0; i < highestDegree; i++) {
-			if (termList.get(i).getDegree() == p2.termList.get(i).getDegree()) {
-				term t = new term((termList.get(i).getCoefficient() + p2.termList.get(i).getCoefficient()), i);
-				sumPTermList.add(t);
-			} else if (termList.contains(termList.get(i))) {
-				sumPTermList.add(termList.get(i));
-			} else if (p2.termList.contains(termList.get(i))) {
-				sumPTermList.add(p2.termList.get(i));
-			}
-		}
-		sumPolynomial = new polynomial(sumPTermList);
-		return sumPolynomial;
+
+      // create an arraylist to hold the result set
+		ArrayList<term> s = new ArrayList<term>();
+
+      // Get the highest degree in hd
+      int hd = this.getDegreeOfPolynomial() > p2.getDegreeOfPolynomial() ?
+         this.getDegreeOfPolynomial() : p2.getDegreeOfPolynomial();
+
+      // Loop through to highest degree
+      for (int i=1; i<= hd; i++) {
+         // get the coefficients of this & p2
+         Optional coef1 = this.gcbe(i);
+         Optional coef2 = p2.gcbe(i);
+
+         // If only one coefficient is present, add that to the
+         // resultant polynomial. If both coeff's are present,
+         // add the sum to the result polynomial.
+         if (! coef1.isPresent() && coef2.isPresent()) 
+            s.add(new term((int)coef2.get(), i));
+         if (coef1.isPresent() && ! coef2.isPresent())
+            s.add(new term((int)coef1.get(), i));
+         if (coef1.isPresent() && coef2.isPresent()) 
+            s.add(new term((int)coef1.get() + (int)coef2.get(), i));
+      }
+
+      // return a new polynomial from the term list
+      return new Polynomial(s);
 	}
 
 }

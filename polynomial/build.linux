@@ -1,8 +1,8 @@
 #!/bin/bash
 PROJ_PATH=/Users/ross/work/kevin/polynomial
 pushd $PROJ_PATH >> /dev/null
-javac $PROJ_PATH/*.java -d .
+javac $PROJ_PATH/src/*.java -d bin/
 
-java -cp $PROJ_PATH PolynomialDriver
+java -cp $PROJ_PATH/bin PolynomialDriver
 popd >> /dev/null
 

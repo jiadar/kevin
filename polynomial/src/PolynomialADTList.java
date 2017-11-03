@@ -7,6 +7,6 @@ public interface PolynomialADTList {
 	
 	public void changeCoefficient(int newCoefficient, int power);	//change coefficient of what power
 																//user wants to change
-	public void addPolynomials(Polynomial polynomial);	//add the polynomials together
+	public Polynomial addPolynomials(Polynomial polynomial);	//add the polynomials together
 	
 }
