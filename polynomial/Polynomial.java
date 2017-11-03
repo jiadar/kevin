@@ -71,7 +71,9 @@ public class Polynomial implements PolynomialADTList {
 
       // update interface to include method/return type
       // make new polynominal for return value (rval)
+      rval = new Polynomial();
       // sort this (Collections.sort(termList)) (p1)
+      Collections.sort(termList);
       // sort p2
       // find the highest exponent of p1 & p2 (max)
       // loop: i [1-max]
