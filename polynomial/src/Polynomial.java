@@ -113,9 +113,9 @@ public class Polynomial implements PolynomialADTList {
 	}
 
 	@Override
-	public Polynomial addPolynomials(Polynomial p2) {
+   public Polynomial addPolynomials(Polynomial p2) {
       // create an arraylist to hold the result set
-		ArrayList<term> s = new ArrayList<term>();
+      ArrayList<term> s = new ArrayList<term>();
 
       // Get the highest degree in hd
       int hd = this.getDegreeOfPolynomial() > p2.getDegreeOfPolynomial() ?
@@ -140,6 +140,5 @@ public class Polynomial implements PolynomialADTList {
 
       // return a new polynomial from the term list
       return new Polynomial(s);
-	}
-
+   }
 }
